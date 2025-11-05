@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Login - ZRP Traffic System{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="text-center mb-4">
+        <h2><i class="fas fa-shield-alt text-primary"></i></h2>
+        <h3>ZRP Officer Login</h3>
+        <p class="text-muted">Enter your credentials to access the system</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="mb-3">
+            <label for="badge_number" class="form-label">Badge Number</label>
+            <input type="text" class="form-control" id="badge_number" name="badge_number" 
+                   placeholder="e.g., ZRP001" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" 
+                   placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </form>
+
+    <div class="mt-4 text-center">
+        <small class="text-muted">
+            <strong>Demo Credentials:</strong><br>
+            Admin: ZRP001 / admin123<br>
+            Officer: ZRP002 / officer123
+        </small>
+    </div>
+</div>
+{% endblock %}

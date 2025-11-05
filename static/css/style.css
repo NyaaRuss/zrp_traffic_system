@@ -1,0 +1,104 @@
+/* static/css/style.css */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.stats-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.stats-label {
+    font-size: 1rem;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.table th {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+.sidebar {
+    background-color: #343a40;
+    color: white;
+    min-height: calc(100vh - 56px);
+    padding: 0;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background-color: #0d6efd;
+}
+
+.report-content {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+}

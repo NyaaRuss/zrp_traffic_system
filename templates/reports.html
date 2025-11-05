@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - ZRP Traffic System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fas fa-chart-bar"></i> Generate Reports</h1>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-filter"></i> Report Criteria
+    </div>
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('reports') }}">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="report_type" class="form-label">Report Type</label>
+                    <select class="form-select" id="report_type" name="report_type">
+                        <option value="detailed" {% if report_type == 'detailed' %}selected{% endif %}>Detailed Report</option>
+                        <option value="statistics" {% if report_type == 'statistics' %}selected{% endif %}>Statistics Report</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="start_date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" 
+                           value="{{ start_date }}">
+                </div>
+                <div class="col-md-2">
+                    <label for="end_date" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" 
+                           value="{{ end_date }}">
+                </div>
+                {% if current_user.role in ['admin', 'super_admin'] %}
+                <div class="col-md-3">
+                    <label for="officer_id" class="form-label">Officer</label>
+                    <select class="form-select" id="officer_id" name="officer_id">
+                        <option value="all">All Officers</option>
+                        {% for officer in officers %}
+                        <option value="{{ officer[0] }}">{{ officer[1] }} - {{ officer[2] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-chart-bar"></i> Generate
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if report_content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-file-alt"></i> 
+            {% if report_type == 'statistics' %}Statistics Report{% else %}Detailed Fines Report{% endif %}
+        </span>
+        <a href="data:text/plain;charset=utf-8,{{ report_content|urlencode }}" 
+           download="zrp_report.txt" class="btn btn-sm btn-outline-primary">
+            <i class="fas fa-download"></i> Download
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="report-content">
+            {{ report_content }}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('start_date').value = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    document.getElementById('end_date').value = new Date().toISOString().split('T')[0];
+</script>
+{% endblock %}

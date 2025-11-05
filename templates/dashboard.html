@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ZRP Traffic System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <span class="text-muted">Welcome, {{ current_user.full_name }}</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="stats-number">{{ total_fines }}</div>
+            <div class="stats-label">Total Fines</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="stats-number">{{ total_paid }}</div>
+            <div class="stats-label">Paid Fines</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="stats-number">${{ "%.2f"|format(revenue) }}</div>
+            <div class="stats-label">Revenue Collected</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="stats-number">{{ today_fines }}</div>
+            <div class="stats-label">Today's Fines</div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-bolt"></i> Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('record_offence') }}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Record New Offence
+                    </a>
+                    <a href="{{ url_for('view_fines') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> Search Fines
+                    </a>
+                    <a href="{{ url_for('reports') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-chart-bar"></i> Generate Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle"></i> System Information
+            </div>
+            <div class="card-body">
+                <p><strong>User:</strong> {{ current_user.full_name }}</p>
+                <p><strong>Role:</strong> {{ current_user.role|title }}</p>
+                <p><strong>Department:</strong> {{ current_user.department }}</p>
+                <p><strong>Badge Number:</strong> {{ current_user.badge_number }}</p>
+                <hr>
+                <small class="text-muted">
+                    <i class="fas fa-shield-alt"></i>
+                    Zimbabwe Republic Police - Automated Traffic Fine Management System
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-history"></i> Recent Fines
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fine Number</th>
+                                <th>Date</th>
+                                <th>Offender</th>
+                                <th>Vehicle</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fine in recent_fines %}
+                            <tr>
+                                <td>{{ fine[0] }}</td>
+                                <td>{{ fine[1] }}</td>
+                                <td>{{ fine[6] }}</td>
+                                <td>{{ fine[8] }}</td>
+                                <td>${{ "%.2f"|format(fine[3]) }}</td>
+                                <td>
+                                    <span class="badge bg-{% if fine[4] == 'paid' %}success{% elif fine[4] == 'issued' %}warning{% else %}danger{% endif %}">
+                                        {{ fine[4]|title }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No fines recorded yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

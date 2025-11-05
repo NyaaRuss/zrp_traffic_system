@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Record Offence - ZRP Traffic System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fas fa-edit"></i> Record Traffic Offence</h1>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-car-crash"></i> Offence Details
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('record_offence') }}">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Offender Information</h5>
+                    <div class="mb-3">
+                        <label for="national_id" class="form-label">National ID *</label>
+                        <input type="text" class="form-control" id="national_id" name="national_id" 
+                               placeholder="e.g., 63-123456A78" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" 
+                               placeholder="e.g., John Doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" 
+                               placeholder="e.g., john.doe@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" 
+                               placeholder="e.g., +263771234567">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Vehicle Information</h5>
+                    <div class="mb-3">
+                        <label for="registration_number" class="form-label">Registration Number *</label>
+                        <input type="text" class="form-control" id="registration_number" name="registration_number" 
+                               placeholder="e.g., ABC1234" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle_make" class="form-label">Make *</label>
+                        <input type="text" class="form-control" id="vehicle_make" name="vehicle_make" 
+                               placeholder="e.g., Toyota" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle_model" class="form-label">Model *</label>
+                        <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" 
+                               placeholder="e.g., Corolla" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle_color" class="form-label">Color</label>
+                        <input type="text" class="form-control" id="vehicle_color" name="vehicle_color" 
+                               placeholder="e.g., Blue">
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Offence Details</h5>
+                    <div class="mb-3">
+                        <label for="offence_location" class="form-label">Offence Location *</label>
+                        <input type="text" class="form-control" id="offence_location" name="offence_location" 
+                               placeholder="e.g., Samora Machel Ave, Harare" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="offence_date" class="form-label">Offence Date & Time *</label>
+                        <input type="datetime-local" class="form-control" id="offence_date" name="offence_date" required>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Offence Type</h5>
+                    <div class="mb-3">
+                        <label for="offence_type_id" class="form-label">Select Offence *</label>
+                        <select class="form-select" id="offence_type_id" name="offence_type_id" required>
+                            <option value="">Choose an offence type...</option>
+                            {% for offence in offence_types %}
+                            <option value="{{ offence[0] }}">
+                                {{ offence[1] }} - {{ offence[2] }} (${{ "%.2f"|format(offence[3]) }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note:</strong> An automated notification will be sent to the offender.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-paper-plane"></i> Issue Fine
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('offence_date').value = new Date().toISOString().slice(0, 16);
+</script>
+{% endblock %}
